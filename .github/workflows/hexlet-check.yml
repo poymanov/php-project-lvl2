@@ -25,3 +25,7 @@ jobs:
         uses: hexlet/project-action@release
         with:
           hexlet-id: ${{ secrets.HEXLET_ID }}
+      - name: Lint
+        run: composer run-script phpcs -- --standard=PSR12 src bin
+      - name: Test
+        run: composer run-script phpunit
