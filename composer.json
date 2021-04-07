@@ -1,0 +1,18 @@
+{
+    "name": "hexlet/code",
+    "description": "Hexlet Code",
+    "type": "project",
+    "license": "MIT",
+    "authors": [
+        {
+          "name": "Nicolay Poymanov",
+          "email": "n.poymanov@gmail.com"
+        }
+    ],
+    "bin": [
+        "bin/gendiff"
+    ],
+    "require": {
+        "docopt/docopt": "^1.0"
+    }
+}
