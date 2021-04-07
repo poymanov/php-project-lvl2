@@ -25,6 +25,8 @@ jobs:
         uses: hexlet/project-action@release
         with:
           hexlet-id: ${{ secrets.HEXLET_ID }}
+      - name: Install Dependencies
+        run: composer install
       - name: Lint
         run: composer run-script phpcs -- --standard=PSR12 src bin
       - name: Test
