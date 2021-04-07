@@ -18,11 +18,13 @@
     ],
     "autoload": {
         "files": [
-            "src/Differ.php"
+            "src/Differ.php",
+            "src/Parsers.php"
         ]
     },
     "require": {
-        "docopt/docopt": "^1.0"
+        "docopt/docopt": "^1.0",
+        "symfony/yaml": "^5.2"
     },
     "require-dev": {
         "squizlabs/php_codesniffer": "^3.5",

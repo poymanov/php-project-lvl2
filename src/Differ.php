@@ -20,8 +20,8 @@ function getDiff(string $firstFilePath, string $secondFilePath): array
 {
     $data = [];
 
-    $firstFile = getDataFromFile($firstFilePath);
-    $secondFile = getDataFromFile($secondFilePath);
+    $firstFile = parseFile($firstFilePath);
+    $secondFile = parseFile($secondFilePath);
 
     ksort($firstFile);
 
@@ -92,18 +92,6 @@ function getValue($value): string
     } else {
         return (string) $value;
     }
-}
-
-/**
- * Получение данных из файла
- *
- * @param string $filePath
- *
- * @return array
- */
-function getDataFromFile(string $filePath): array
-{
-    return json_decode(file_get_contents($filePath), true);
 }
 
 /**

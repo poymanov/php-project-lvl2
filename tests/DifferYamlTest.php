@@ -5,12 +5,12 @@ namespace Tests;
 use PHPUnit\Framework\TestCase;
 use function Differ\getDiff;
 
-class DifferTest extends TestCase
+class DifferYamlTest extends TestCase
 {
     public function testSimpleStructure(): void
     {
-        $firstFilePath  = 'tests/fixtures/simple/file1.json';
-        $secondFilePath = 'tests/fixtures/simple/file2.json';
+        $firstFilePath  = 'tests/fixtures/simple/yml/file1.yml';
+        $secondFilePath = 'tests/fixtures/simple/yml/file2.yml';
 
         $expected = [
             ['type' => '-', 'key' => 'follow', 'value' => 'false'],
