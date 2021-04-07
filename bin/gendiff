@@ -11,6 +11,8 @@ if (file_exists($autoloadPath1)) {
     require_once $autoloadPath2;
 }
 
+use function Differ\getDiff;
+
 $doc = <<<'DOCOPT'
 Generate diff
 
@@ -25,6 +27,10 @@ Options:
   --format <fmt>                Report format [default: stylish]
 DOCOPT;
 
-$result = Docopt::handle($doc, array('version'=>'1.0.0rc2'));
-foreach ($result as $k=>$v)
-    echo $k.': '.json_encode($v).PHP_EOL;
+$result = Docopt::handle($doc, ['version'=>'1.0.0rc2']);
+
+$args = $result->args;
+
+$result = getDiff($args['<firstFile>'], $args['<secondFile>']);
+
+echo $result;
