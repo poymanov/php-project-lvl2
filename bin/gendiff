@@ -12,6 +12,7 @@ if (file_exists($autoloadPath1)) {
 }
 
 use function Differ\getDiff;
+use function Differ\printDiff;
 
 $doc = <<<'DOCOPT'
 Generate diff
@@ -33,4 +34,4 @@ $args = $result->args;
 
 $result = getDiff($args['<firstFile>'], $args['<secondFile>']);
 
-echo $result;
+printDiff($result);

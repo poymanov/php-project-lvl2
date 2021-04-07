@@ -4,58 +4,59 @@ declare(strict_types=1);
 
 namespace Differ;
 
-function getDiff(string $firstFilePath, string $secondFilePath): string
+const ADD_CHANGE_TYPE = '+';
+const REMOVE_TYPE = '-';
+const ACTUAL_TYPE = ' ';
+
+/**
+ * Получение разницы двух файлов
+ *
+ * @param string $firstFilePath
+ * @param string $secondFilePath
+ *
+ * @return array
+ */
+function getDiff(string $firstFilePath, string $secondFilePath): array
 {
     $data = [];
 
-    $firstFile = json_decode(file_get_contents($firstFilePath), true);
-    $secondFile = json_decode(file_get_contents($secondFilePath), true);
+    $firstFile = getDataFromFile($firstFilePath);
+    $secondFile = getDataFromFile($secondFilePath);
 
     ksort($firstFile);
 
     foreach ($firstFile as $key => $value) {
         if (!isset($secondFile[$key])) {
-            $data[] = [
-                'type'  => '-',
-                'key'   => $key,
-                'value' => getValue($value)
-            ];
+            $data[] = buildRemoveItemForDiff($key, $value);
         } else {
-            $firstValue = getValue($value);
-            $secondValue = getValue($secondFile[$key]);
+            $firstValue = $value;
+            $secondValue = $secondFile[$key];
 
             if ($firstValue !== $secondValue) {
-                $data[] = [
-                    'type' => '-',
-                    'key' => $key,
-                    'value' => $firstValue
-                ];
-
-                $data[] = [
-                    'type' => '+',
-                    'key' => $key,
-                    'value' => $secondValue
-                ];
+                $data[] = buildRemoveItemForDiff($key, $value);
+                $data[] = buildAddChangeItemForDiff($key, $value);
             } else {
-                $data[] = [
-                    'type' => '',
-                    'key' => $key,
-                    'value' => $firstValue
-                ];
+                $data[] = buildActualItemForDiff($key, $value);
             }
         }
     }
 
     foreach ($secondFile as $key => $value) {
         if (!isset($firstFile[$key])) {
-            $data[] = [
-                'type' => '+',
-                'key' => $key,
-                'value' => getValue($value)
-            ];
+            $data[] = buildAddChangeItemForDiff($key, $value);
         }
     }
 
+    return $data;
+}
+
+/**
+ * Печать результата сравнений
+ *
+ * @param array $data
+ */
+function printDiff(array $data): void
+{
     $result = '{' . PHP_EOL;
 
     foreach ($data as $item) {
@@ -72,16 +73,92 @@ function getDiff(string $firstFilePath, string $secondFilePath): string
 
     $result .= '}' . PHP_EOL;
 
-    return $result;
+    echo $result;
 }
 
-function getValue($value)
+/**
+ * Получение значения элемента
+ *
+ * @param mixed $value
+ *
+ * @return string
+ */
+function getValue($value): string
 {
     if (!$value) {
         return 'false';
     } elseif ($value == 1) {
         return 'true';
     } else {
-        return $value;
+        return (string) $value;
     }
+}
+
+/**
+ * Получение данных из файла
+ *
+ * @param string $filePath
+ *
+ * @return array
+ */
+function getDataFromFile(string $filePath): array
+{
+    return json_decode(file_get_contents($filePath), true);
+}
+
+/**
+ * Формирование элемента данных для данных с разницей
+ *
+ * @param string $type
+ * @param        $key
+ * @param        $value
+ *
+ * @return array
+ */
+function buildItemForDiff(string $type, $key, $value): array
+{
+    return [
+        'type'  => $type,
+        'key'   => $key,
+        'value' => getValue($value)
+    ];
+}
+
+/**
+ * Формирование элемента данных для данных с добавлением/изменением
+ *
+ * @param $key
+ * @param $value
+ *
+ * @return array
+ */
+function buildAddChangeItemForDiff($key, $value): array
+{
+    return buildItemForDiff(ADD_CHANGE_TYPE, $key, $value);
+}
+
+/**
+ * Формирование элемента данных для данных с удалением
+ *
+ * @param $key
+ * @param $value
+ *
+ * @return array
+ */
+function buildRemoveItemForDiff($key, $value): array
+{
+    return buildItemForDiff(REMOVE_TYPE, $key, $value);
+}
+
+/**
+ * Формирование элемента данных для данных без изменений
+ *
+ * @param $key
+ * @param $value
+ *
+ * @return array
+ */
+function buildActualItemForDiff($key, $value): array
+{
+    return buildItemForDiff(ACTUAL_TYPE, $key, $value);
 }
