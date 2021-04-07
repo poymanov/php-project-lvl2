@@ -9,6 +9,9 @@
           "email": "n.poymanov@gmail.com"
         }
     ],
+    "scripts": {
+        "phpcs": "phpcs"
+    },
     "bin": [
         "bin/gendiff"
     ],
@@ -19,5 +22,8 @@
     },
     "require": {
         "docopt/docopt": "^1.0"
+    },
+    "require-dev": {
+        "squizlabs/php_codesniffer": "^3.5"
     }
 }
