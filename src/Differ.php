@@ -34,7 +34,7 @@ function getDiff(string $firstFilePath, string $secondFilePath): array
 
             if ($firstValue !== $secondValue) {
                 $data[] = buildRemoveItemForDiff($key, $value);
-                $data[] = buildAddChangeItemForDiff($key, $value);
+                $data[] = buildAddChangeItemForDiff($key, $secondValue);
             } else {
                 $data[] = buildActualItemForDiff($key, $value);
             }

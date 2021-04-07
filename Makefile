@@ -3,3 +3,6 @@ gendiff:
 
 lint:
 	docker-compose run --rm php-cli composer run-script phpcs -- --standard=PSR12 src bin
+
+test:
+	docker-compose run --rm php-cli composer run-script phpunit
