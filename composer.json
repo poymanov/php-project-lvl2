@@ -35,8 +35,7 @@
     "require": {
         "php": ">=7.4",
         "docopt/docopt": "^1.0",
-        "symfony/yaml": "^5.2",
-        "funct/funct": "^1.5"
+        "symfony/yaml": "^5.2"
     },
     "require-dev": {
         "squizlabs/php_codesniffer": "^3.5",
