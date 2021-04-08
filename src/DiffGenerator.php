@@ -124,6 +124,7 @@ function union($collectionFirst, $collectionSecond)
 function sortBy($collection, $sortBy, $sortFunction = 'asort')
 {
     if (false === is_callable($sortBy)) {
+        /** @phpstan-ignore-next-line */
         $sortBy = function ($item) use ($sortBy) {
             /** @phpstan-ignore-next-line */
             return $item[$sortBy];
