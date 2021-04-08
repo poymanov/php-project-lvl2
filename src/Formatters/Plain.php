@@ -2,8 +2,6 @@
 
 namespace Differ\Differ\Formatters\Plain;
 
-use function Funct\Collection\flattenAll;
-
 /**
  * @param mixed $value
  * @return string
@@ -61,4 +59,27 @@ function generatePlainOutput(array $tree, array $propertyNames): array
 function render(array $data): string
 {
     return implode("\n", generatePlainOutput($data, []));
+}
+
+/**
+ * Flattens all arrays to single level
+ *
+ * @param array $collection
+ *
+ * @return array
+ * @author Aurimas Niekis <aurimas@niekis.lt>
+ */
+function flattenAll($collection)
+{
+    $result = [];
+
+    foreach ($collection as $value) {
+        if (is_array($value)) {
+            $result = array_merge($result, flattenAll($value));
+        } else {
+            $result[] = $value;
+        }
+    }
+
+    return $result;
 }
