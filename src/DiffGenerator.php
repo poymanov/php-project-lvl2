@@ -133,6 +133,8 @@ function sortBy($collection, $sortBy, $sortFunction = 'asort')
 
     /** @phpstan-ignore-next-line */
     $values = array_map($sortBy, $collection);
+
+    /** @phpstan-ignore-next-line */
     $sortFunction($values);
 
     $result = [];
