@@ -1,5 +1,4 @@
 #!/usr/bin/env php
-
 <?php
 
 $autoloadPath1 = __DIR__ . '/../../../autoload.php';
@@ -11,27 +10,34 @@ if (file_exists($autoloadPath1)) {
     require_once $autoloadPath2;
 }
 
-use function Differ\getDiff;
-use function Differ\printDiff;
+use function Differ\Differ\genDiff;
 
-$doc = <<<'DOCOPT'
-Generate diff
+$doc = <<<DOCOPT
 
-Usage:
-  gendiff (-h|--help)
-  gendiff (-v|--version)
-  gendiff [--format <fmt>] <firstFile> <secondFile>
+  Generate diff
 
-Options:
-  -h --help                     Show this screen
-  -v --version                  Show version
-  --format <fmt>                Report format [default: stylish]
-DOCOPT;
+  Usage:
+    gendiff (-h|--help)
+    gendiff (-v|--version)
+    gendiff [--format <fmt>] <firstFile> <secondFile>
 
-$result = Docopt::handle($doc, ['version'=>'1.0.0rc2']);
+  Options:
+    -h --help                     Show this screen
+    -v --version                  Show version
+    --format <fmt>                Report format [default: stylish]
 
-$args = $result->args;
+  Report formats:
+    <fmt>
+        pretty                 Show changes in files marked with symbols "+/-" 
+        plain                  Show changes in files explained by the text
+        json                   Show changes in files as a JSON string
+  DOCOPT;
 
-$result = getDiff($args['<firstFile>'], $args['<secondFile>']);
-
-printDiff($result);
+$args = Docopt::handle($doc, array('version'=>'v1.0.0'));
+[
+    '<firstFile>' => $pathToFirstFile,
+    '<secondFile>' => $pathToSecondFile,
+    '--format' => $format
+] = $args;
+$diff = genDiff($pathToFirstFile, $pathToSecondFile, $format);
+print_r($diff);

@@ -1,51 +1,21 @@
 <?php
 
-namespace Differ;
+namespace Differ\Differ\Parsers;
 
-use Symfony\Component\Yaml\Yaml;
+use function Differ\Differ\Parsers\parseJson;
+use function Differ\Differ\Parsers\parseYaml;
 
-/**
- * Получение данных для сравнения из файла
- *
- * @param string $filePath
- *
- * @return array
- */
-function parseFile(string $filePath)
+function parseData(string $data, string $parserType): object
 {
-    $content = file_get_contents($filePath);
+    $parsers = [
+        'json' => fn($data) => parseJson($data),
+        'yaml' => fn($data) => parseYaml($data),
+        'yml' => fn($data) => parseYaml($data)
+    ];
 
-    $fileInfo = pathinfo($filePath);
-
-    $extension = $fileInfo['extension'];
-
-    if ($extension === 'json') {
-        return parseJson($content);
-    } elseif (in_array($extension, ['yaml', 'yml'])) {
-        return parseYaml($content);
+    if (!array_key_exists($parserType, $parsers)) {
+        throw new \Exception("Unsupported parser type: {$parserType}");
     }
-}
 
-/**
- * Получение данных из json
- *
- * @param string $content
- *
- * @return array
- */
-function parseJson(string $content): array
-{
-    return json_decode($content, true);
-}
-
-/**
- * Получение данных из yaml
- *
- * @param string $content
- *
- * @return array
- */
-function parseYaml(string $content): array
-{
-    return (array) Yaml::parse($content, Yaml::PARSE_OBJECT_FOR_MAP);
+    return $parsers[$parserType]($data);
 }

@@ -17,14 +17,26 @@
         "bin/gendiff"
     ],
     "autoload": {
+        "psr-4": {
+            "Php\\Package\\": "src",
+            "Php\\Package\\Tests\\": "tests"
+        },
         "files": [
-            "src/Differ.php",
-            "src/Parsers.php"
+            "src/DiffGenerator.php",
+            "src/Parsers/JsonParser.php",
+            "src/Parsers/YamlParser.php",
+            "src/Parsers.php",
+            "src/Formatters/Stylish.php",
+            "src/Formatters/Plain.php",
+            "src/Formatters/Json.php",
+            "src/Formatters.php"
         ]
     },
     "require": {
+        "php": ">=7.4",
         "docopt/docopt": "^1.0",
-        "symfony/yaml": "^5.2"
+        "symfony/yaml": "^5.2",
+        "funct/funct": "^1.5"
     },
     "require-dev": {
         "squizlabs/php_codesniffer": "^3.5",

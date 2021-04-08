@@ -1,0 +1,116 @@
+[
+    {
+        "name": "common",
+        "state": "nested",
+        "children": [
+            {
+                "name": "follow",
+                "value": false,
+                "state": "added"
+            },
+            {
+                "name": "setting1",
+                "value": "Value 1",
+                "state": "unchanged"
+            },
+            {
+                "name": "setting2",
+                "value": 200,
+                "state": "removed"
+            },
+            {
+                "name": "setting3",
+                "oldValue": true,
+                "newValue": null,
+                "state": "changed"
+            },
+            {
+                "name": "setting4",
+                "value": "blah blah",
+                "state": "added"
+            },
+            {
+                "name": "setting5",
+                "value": {
+                    "key5": "value5"
+                },
+                "state": "added"
+            },
+            {
+                "name": "setting6",
+                "state": "nested",
+                "children": [
+                    {
+                        "name": "doge",
+                        "state": "nested",
+                        "children": [
+                            {
+                                "name": "wow",
+                                "oldValue": "",
+                                "newValue": "so much",
+                                "state": "changed"
+                            }
+                        ]
+                    },
+                    {
+                        "name": "key",
+                        "value": "value",
+                        "state": "unchanged"
+                    },
+                    {
+                        "name": "ops",
+                        "value": "vops",
+                        "state": "added"
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "name": "group1",
+        "state": "nested",
+        "children": [
+            {
+                "name": "baz",
+                "oldValue": "bas",
+                "newValue": "bars",
+                "state": "changed"
+            },
+            {
+                "name": "foo",
+                "value": "bar",
+                "state": "unchanged"
+            },
+            {
+                "name": "nest",
+                "oldValue": {
+                    "key": "value"
+                },
+                "newValue": "str",
+                "state": "changed"
+            }
+        ]
+    },
+    {
+        "name": "group2",
+        "value": {
+            "abc": 12345,
+            "deep": {
+                "id": 45
+            }
+        },
+        "state": "removed"
+    },
+    {
+        "name": "group3",
+        "value": {
+            "fee": 100500,
+            "deep": {
+                "id": {
+                    "number": 45
+                }
+            }
+        },
+        "state": "added"
+    }
+]
