@@ -73,10 +73,13 @@ function flattenAll($collection)
 {
     $result = [];
 
+    /** @phpstan-ignore-next-line */
     foreach ($collection as $value) {
         if (is_array($value)) {
+            /** @phpstan-ignore-next-line */
             $result = array_merge($result, flattenAll($value));
         } else {
+            /** @phpstan-ignore-next-line */
             $result[] = $value;
         }
     }

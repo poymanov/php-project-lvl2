@@ -125,15 +125,20 @@ function sortBy($collection, $sortBy, $sortFunction = 'asort')
 {
     if (false === is_callable($sortBy)) {
         $sortBy = function ($item) use ($sortBy) {
+            /** @phpstan-ignore-next-line */
             return $item[$sortBy];
         };
     }
 
+    /** @phpstan-ignore-next-line */
     $values = array_map($sortBy, $collection);
     $sortFunction($values);
 
     $result = [];
+
+    /** @phpstan-ignore-next-line */
     foreach ($values as $key => $value) {
+        /** @phpstan-ignore-next-line */
         $result[$key] = $collection[$key];
     }
 
